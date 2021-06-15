@@ -35,4 +35,3 @@ columnRouter.put('/:columnId', (req, res) => res.json(req.body));
 columnRouter.delete('/:columnId', (req, res) => res.json({status:'ok'}));
 
 export default columnRouter;
-
