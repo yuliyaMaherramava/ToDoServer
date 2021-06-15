@@ -1,6 +1,5 @@
 import express from 'express';
 
-const app = express();
 const columnRouter = express.Router();
 
 const columnsFile = [{
