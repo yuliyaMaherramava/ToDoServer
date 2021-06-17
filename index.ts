@@ -8,7 +8,6 @@ const PORT = 8880;
 app.use('/tasks', taskRouter);
 app.use('/columns', columnRouter);
 
-
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });
