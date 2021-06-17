@@ -1,6 +1,5 @@
-import { TaskModel } from './taskEntity'; 
+import { TaskModel } from "./taskEntity";
 
 export async function findTasks() {
-    const tasks = await TaskModel.find({}).exec();
-    return tasks;
+    return await TaskModel.find({ deletedAt: { $exists: false } }).exec();
 }

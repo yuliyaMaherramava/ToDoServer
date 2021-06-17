@@ -1,4 +1,4 @@
-import { findColumns } from './columnRepository';
+import { findColumns } from "./columnRepository";
 
 export async function getAllColumns() {
     return await findColumns();
