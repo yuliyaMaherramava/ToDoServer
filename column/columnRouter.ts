@@ -7,7 +7,9 @@ columnRouter.get('/', async (req, res) => {
     const columns = await getAllColumns();
     res.json(columns);
 });
-columnRouter.post('/', (req, res) => res.json(req.body));
+columnRouter.post('/', (req, res) => {
+    res.json(req.body)
+});
 columnRouter.put('/:columnId', (req, res) => res.json(req.params));
 columnRouter.delete('/:columnId', (req, res) => res.json({status:'ok'}));
 
