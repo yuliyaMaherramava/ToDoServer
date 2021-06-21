@@ -12,5 +12,4 @@ export function connectToDB() {
     db.once("open", function () {
         console.log("we are connected!");
     });
-    console.log(process.env);
 }

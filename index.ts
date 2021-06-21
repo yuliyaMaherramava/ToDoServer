@@ -10,13 +10,10 @@ const PORT = process.env.PORT;
 
 connectToDB();
 
-<<<<<<< HEAD
 app.use(express.json());
 app.use("/tasks", taskRouter);
 app.use("/columns", columnRouter);
 
-=======
->>>>>>> dev
 app.listen(PORT, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });
