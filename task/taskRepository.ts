@@ -6,7 +6,7 @@ export async function findTasks() {
     return await TaskModel.find({ deletedAt: { $exists: false } }).exec();
 }
 
-export async function taskExists(id:string) {
+export async function taskExists(id: string) {
     return await TaskModel.exists({ _id: Types.ObjectId(id) });
 }
 
@@ -19,10 +19,10 @@ export async function addTask(name: string, order: number, columnId: string) {
         name: name,
         order: order,
         columnId: columnId,
-        }); 
+    }); 
 }
 
-export async function editTask(id:string, name: string, order: number, columnId: string) {
+export async function editTask(id: string, name: string, order: number, columnId: string) {
     await TaskModel.updateOne(
         { _id: id},
         {
@@ -34,6 +34,6 @@ export async function editTask(id:string, name: string, order: number, columnId:
     );
 }
 
-export async function excludeTask(id:string) {
+export async function excludeTask(id: string) {
     return await TaskModel.updateOne({ _id: id }, { deletedAt: new Date() });
 }

@@ -10,19 +10,19 @@ export async function createColumn(name: string, order: number) {
 }
 
 export async function updateColumn(id:string, name: string, order: number) {
-    const isExisted = await columnExists(id);
-    if (!isExisted){ 
-        throw new HttpError('Column doesnt exist', 404);
+    const exist = await columnExists(id);
+    if (exist){ 
+       return await editColumn(id, name, order);
     } else {
-        return await editColumn(id, name, order);
+        throw new HttpError('Column doesnt exist', 404);
     }
 }
 
 export async function deleteColumn(id: string) {
-    const isExisted = await columnExists(id);
-    if (!isExisted){ 
-        throw new HttpError('Column doesnt exist', 404);
-    } else {
+    const exist = await columnExists(id);
+    if (exist){ 
         return await excludeColumn(id);
+    } else {
+        throw new HttpError('Column doesnt exist', 404);
     }
 }

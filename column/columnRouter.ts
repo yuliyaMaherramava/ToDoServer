@@ -1,58 +1,49 @@
 import express from "express";
 import { body, validationResult } from 'express-validator';
 import { createColumn, deleteColumn, getAllColumns, updateColumn } from "./columnService";
-import { HttpError } from "../utils/error";
 
 const columnRouter = express.Router();
 
-columnRouter.get("/", async (req, res) => {
-    const columns = await getAllColumns();
-    res.json(columns);
+columnRouter.get("/", async (req, res, next) => {
+    try{
+        const columns = await getAllColumns();
+        res.json(columns);
+        next();
+    } catch(error) {
+        next(error);
+    }
 });
 columnRouter.post("/",
     body('name').not().isEmpty(),
-    async (req: express.Request, res: express.Response) => {
+    async (req: express.Request, res: express.Response, next: express.NextFunction) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
             await createColumn(req.body.name, req.body.order)
-            res.json({ message: "column created" });
-        } catch(error){
-            if (error instanceof HttpError) {
-                res.status(error.statusCode).send(error.message);
-            } else {
-                res.status(500).json({message: 'Server error'})
-            }
+            res.json({ status: 'ok', message: 'Column was successfully created' });
+            next();
+        } catch(error) {
+            next(error);
         }
-    });
-columnRouter.put("/:columnId", async (req, res) => {
+});
+columnRouter.put("/:columnId", async (req, res, next) => {
     try {
         await updateColumn(req.params.columnId , req.body.name, req.body.order);
-        res.json({ message: "column updated" });
-    } catch (error){
-        if (error instanceof HttpError) {
-            res.status(error.statusCode).send(error.message);
-        } else {
-            res.status(500).json({message: 'Server error'})
-        }
+        res.json({ status: 'ok', message: 'Column was successfully updated' });
+        next();
+    } catch(error) {
+        next(error);
     }
-    // await ColumnModel.updateOne(
-    //     { _id: req.params.columnId },
-    //     { name: req.body.name, order: req.body.order, updatedAt: new Date() }
-    // );
 });
-columnRouter.delete("/:columnId", async (req, res) => {
+columnRouter.delete("/:columnId", async (req, res, next) => {
     try{
         await deleteColumn(req.params.columnId);
-        res.json({ message: "column deleted" });
-    } catch (error){
-        if (error instanceof HttpError) {
-            res.status(error.statusCode).send(error.message);
-        } else {
-            res.status(500).json({message: 'Server error'})
-        }
+        res.json({ status: 'ok', message: 'Column was successfully deleted' });
+        next();
+    } catch(error) {
+        next(error);
     }
 });
 

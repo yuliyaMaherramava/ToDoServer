@@ -14,11 +14,11 @@ export async function addColumn(name: string, order: number) {
     });
 }
 
-export async function columnExists(id:string) {
+export async function columnExists(id: string) {
     return await ColumnModel.exists({ _id: Types.ObjectId(id) });
 }
 
-export async function editColumn(id:string, name: string, order: number) {
+export async function editColumn(id: string, name: string, order: number) {
     return await ColumnModel.updateOne(
         { _id: id },
         {
@@ -29,6 +29,6 @@ export async function editColumn(id:string, name: string, order: number) {
     );
 }
 
-export async function excludeColumn(id:string) {
+export async function excludeColumn(id: string) {
     return await ColumnModel.updateOne({ _id: id}, { deletedAt: new Date() });
 }
