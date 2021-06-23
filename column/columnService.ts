@@ -14,7 +14,7 @@ export async function updateColumn(id:string, name: string, order: number) {
     if (exist){ 
        return await editColumn(id, name, order);
     } else {
-        throw new HttpError('Column doesnt exist', 404);
+        throw new HttpError("Column doesn't exist", 404);
     }
 }
 
