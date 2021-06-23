@@ -23,7 +23,6 @@ columnRouter.post("/",
             }
             await createColumn(req.body.name, req.body.order)
             res.json({ status: 'ok', message: 'Column was successfully created' });
-            next();
         } catch(error) {
             next(error);
         }
@@ -32,7 +31,6 @@ columnRouter.put("/:columnId", async (req, res, next) => {
     try {
         await updateColumn(req.params.columnId , req.body.name, req.body.order);
         res.json({ status: 'ok', message: 'Column was successfully updated' });
-        next();
     } catch(error) {
         next(error);
     }
@@ -40,8 +38,7 @@ columnRouter.put("/:columnId", async (req, res, next) => {
 columnRouter.delete("/:columnId", async (req, res, next) => {
     try{
         await deleteColumn(req.params.columnId);
-        res.json({ status: 'ok', message: 'Column was successfully deleted' });
-        next();
+        res.json({ status: 'ok', message: 'Column was successfully deleted' })
     } catch(error) {
         next(error);
     }

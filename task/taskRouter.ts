@@ -9,7 +9,6 @@ taskRouter.get("/", async (req, res, next) => {
     try{
         const tasks = await getAllTasks();
         res.json(tasks); 
-        next();
     } catch(error) {
         next(error);
     }
@@ -25,25 +24,22 @@ taskRouter.post("/",
             };
             const task = await createTask(req.body.name, req.body.order, req.body.columnId);
             res.send(task); 
-            next();
         } catch(error) {
             next(error);
         }
 });
-taskRouter.put("/:taskId", async (req, res, next) => {
+taskRouter.put("/", async (req, res, next) => {
     try{
-        await updateTask(req.params.taskId , req.body.name, req.body.order, req.body.columnId);
+        await updateTask(req.body.id , req.body.name, req.body.order, req.body.columnId);
         res.json({ status: 'ok', message: 'Task was successfully updated' });
-        next();
     } catch(error) {
         next(error);
     } 
 });
-taskRouter.delete("/:taskId", async (req, res, next) => {
+taskRouter.delete("/", async (req, res, next) => {
     try{
-        await deleteTask(req.params.taskId);
+        await deleteTask(req.body.id);
         res.json({ status: 'ok', message: 'Task was successfully deleted' });
-        next();
     } catch(error) {
         next(error)
     }
