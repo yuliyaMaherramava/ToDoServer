@@ -10,7 +10,7 @@ export async function taskExists(id: string) {
     return await TaskModel.exists({ _id: Types.ObjectId(id) });
 }
 
-export async function updateColumn(id:string, taskId: string) {
+export async function updateColumn(id: string, taskId: string) {
     await ColumnModel.updateOne({ _id: id }, { $push: { tasks: taskId } });
 }
 

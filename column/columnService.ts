@@ -9,7 +9,7 @@ export async function createColumn(name: string, order: number) {
     return await addColumn(name, order);
 }
 
-export async function updateColumn(id:string, name: string, order: number) {
+export async function updateColumn(id: string, name: string, order: number) {
     const exist = await columnExists(id);
     if (exist){ 
        return await editColumn(id, name, order);

@@ -18,7 +18,7 @@ export async function createTask(name: string, order: number, columnId:string) {
     }
 }
 
-export async function updateTask(id:string, name: string, order: number, columnId: string) {
+export async function updateTask(id: string, name: string, order: number, columnId: string) {
     const exist = await taskExists(id);
     if (exist){ 
         return await editTask(id, name, order, columnId);
@@ -27,7 +27,7 @@ export async function updateTask(id:string, name: string, order: number, columnI
     }
 }
 
-export async function deleteTask(id:string) {
+export async function deleteTask(id: string) {
     const exist = await taskExists(id);
     if (!exist){ 
         return await excludeTask(id);
