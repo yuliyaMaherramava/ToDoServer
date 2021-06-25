@@ -7,6 +7,7 @@ const taskRouter = express.Router();
 
 taskRouter.get("/", async (req, res, next) => {
     try{
+        res.set('Access-Control-Allow-Origin', '*');
         const tasks = await getAllTasks();
         res.json(tasks); 
     } catch(error) {
@@ -15,7 +16,6 @@ taskRouter.get("/", async (req, res, next) => {
 });
 taskRouter.post("/",
     body('name').not().isEmpty(),
-    body('columnId').not().isEmpty(),
     async (req: express.Request, res: express.Response, next: express.NextFunction) => {
         try{
             const errors = validationResult(req);

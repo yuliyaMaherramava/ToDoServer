@@ -1,5 +1,6 @@
 import express, {Request, Response, NextFunction} from "express";
 import columnRouter from "./column/columnRouter";
+import cors from 'cors';
 import taskRouter from "./task/taskRouter";
 import { connectToDB } from "./utils/db";
 import dotenv from "dotenv";
@@ -12,6 +13,7 @@ const PORT = process.env.PORT;
 connectToDB();
 
 app.use(express.json());
+app.use(cors());
 app.use("/tasks", taskRouter);
 app.use("/columns", columnRouter);
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
