@@ -41,7 +41,7 @@ taskRouter.delete("/", async (req, res, next) => {
         await deleteTask(req.body.id);
         res.json({ status: 'ok', message: 'Task was successfully deleted' });
     } catch(error) {
-        next(error)
+        next(error);
     }
 });
 

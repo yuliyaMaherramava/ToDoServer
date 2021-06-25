@@ -11,7 +11,7 @@ export async function createTask(name: string, order: number, columnId:string) {
     const exist = await columnExists(columnId);
     if (exist){ 
         const newTask = await addTask(name, order, columnId);
-        await updateColumn(columnId, newTask._id)
+        await updateColumn(columnId, newTask._id);
         return newTask;
     } else {
         throw new HttpError('Column doesnt exist', 404);

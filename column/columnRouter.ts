@@ -21,7 +21,7 @@ columnRouter.post("/",
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            await createColumn(req.body.name, req.body.order)
+            await createColumn(req.body.name, req.body.order);
             res.json({ status: 'ok', message: 'Column was successfully created' });
         } catch(error) {
             next(error);
@@ -38,7 +38,7 @@ columnRouter.put("/:columnId", async (req, res, next) => {
 columnRouter.delete("/:columnId", async (req, res, next) => {
     try{
         await deleteColumn(req.params.columnId);
-        res.json({ status: 'ok', message: 'Column was successfully deleted' })
+        res.json({ status: 'ok', message: 'Column was successfully deleted' });
     } catch(error) {
         next(error);
     }
