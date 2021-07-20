@@ -1,33 +1,48 @@
 import express from "express";
-import { getAllTasks } from "./taskService";
-import { TaskModel } from "../task/taskEntity";
-import { ColumnModel } from "../column/columnEntity";
+import { body, validationResult } from 'express-validator';
+import { getAllTasks, createTask, deleteTask } from "./taskService";
+import { updateTask } from "./taskService";
 
 const taskRouter = express.Router();
 
-taskRouter.get("/", async (req, res) => {
-    const tasks = await getAllTasks();
-    res.json(tasks);
+taskRouter.get("/", async (req, res, next) => {
+    try{
+        const tasks = await getAllTasks();
+        res.json(tasks); 
+    } catch(error) {
+        next(error);
+    }
 });
-taskRouter.post("/", async (req, res) => {
-    const newTask = await TaskModel.create({
-        name: req.body.name,
-        order: req.body.order,
-        columnId: req.body.columnId,
-    });
-    await ColumnModel.updateOne({ _id: req.body.columnId }, { $push: { tasks: newTask._id } });
-    res.json({ message: "task created" });
+taskRouter.post("/",
+    body('name').not().isEmpty(),
+    async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+        try{
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                res.status(400).json({ errors: errors.array() });
+            };
+            const task = await createTask(req.body.name, req.body.order, req.body.columnId);
+            res.send(task); 
+        } catch(error) {
+            next(error);
+        }
 });
-taskRouter.put("/:taskId", async (req, res) => {
-    await TaskModel.updateOne(
-        { _id: req.params.taskId },
-        { name: req.body.name, order: req.body.order, updatedAt: new Date() }
-    );
-    res.json({ message: "task updated" });
+taskRouter.put("/", async (req, res, next) => {
+    try{
+        await updateTask(req.body.id , req.body.name, req.body.order, req.body.columnId);
+        res.json({ status: 'ok', message: 'Task was successfully updated' });
+    } catch(error) {
+        next(error);
+    } 
 });
-taskRouter.delete("/:taskId", async (req, res) => {
-    await TaskModel.updateOne({ _id: req.params.taskId }, { deletedAt: new Date() });
-    res.json({ message: "task deleted" });
+taskRouter.delete("/", async (req, res, next) => {
+    try{
+        await deleteTask(req.body.id);
+        res.json({ status: 'ok', message: 'Task was successfully deleted' });
+    } catch(error) {
+        next(error);
+    }
 });
 
 export default taskRouter;
+
